@@ -244,7 +244,18 @@ color:white;
 font-size:15px;
 backdrop-filter:blur(15px);
 border:1px solid rgba(255,255,255,0.08);
-box-shadow:0 0 25px rgba(0,170,255,0.08);
+}
+
+
+
+/* USERS */
+
+.userBox{
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:22px;
+margin-bottom:16px;
+border:1px solid rgba(255,255,255,0.08);
 }
 
 
@@ -339,6 +350,14 @@ background:linear-gradient(90deg,#ff0033,#cc0000);
 background:linear-gradient(90deg,#00a2ff,#0044ff);
 }
 
+.sectionTitle{
+font-size:24px;
+font-weight:800;
+color:#00bfff;
+margin-bottom:20px;
+margin-top:15px;
+}
+
 </style>
 
 </head>
@@ -362,14 +381,9 @@ Secure Premium Admin Access
 </div>
 
 <input
-type="text"
-id="adminUser"
-placeholder="Enter Username">
-
-<input
 type="password"
 id="adminPass"
-placeholder="Enter Password">
+placeholder="Enter Access Code">
 
 <button
 class="loginBtn"
@@ -462,11 +476,27 @@ id="pendingPosts">
 type="text"
 id="searchInput"
 class="searchBar"
-placeholder="Search confession, username or Password..."
+placeholder="Search confession, username or roll number..."
 onkeyup="searchPosts()"
 >
 
 
+
+<!-- USERS -->
+
+<div class="sectionTitle">
+Logged Users
+</div>
+
+<div id="usersContainer"></div>
+
+
+
+<!-- POSTS -->
+
+<div class="sectionTitle">
+Confessions
+</div>
 
 <div id="postsContainer"></div>
 
@@ -519,13 +549,10 @@ const db = getFirestore(app);
 
 window.loginAdmin = function(){
 
-let user =
-document.getElementById("adminUser").value;
-
 let pass =
 document.getElementById("adminPass").value;
 
-if(user === "Babar" && pass === "1212"){
+if(pass === "Babar@1212"){
 
 document.getElementById("loginPage")
 .style.display = "none";
@@ -535,11 +562,69 @@ document.getElementById("dashboard")
 
 loadPosts();
 
+loadUsers();
+
 }else{
 
-showPopup("Wrong admin username or password");
+showPopup("Invalid access code");
 
 }
+
+}
+
+
+
+/* LOAD USERS */
+
+async function loadUsers(){
+
+const querySnapshot =
+await getDocs(collection(db,"users"));
+
+let output = "";
+
+querySnapshot.forEach((docSnap,index)=>{
+
+const data = docSnap.data();
+
+output += `
+
+<div class="userBox">
+
+<div style="
+font-size:18px;
+font-weight:700;
+color:#00bfff;
+margin-bottom:10px;
+">
+User #${index + 1}
+</div>
+
+<div style="line-height:30px;">
+
+<b>Username:</b>
+${data.username}
+
+<br>
+
+<b>Roll No:</b>
+${data.rollno}
+
+<br>
+
+<b>Login Time:</b>
+${data.loginTime}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("usersContainer")
+.innerHTML = output;
 
 }
 
@@ -558,8 +643,6 @@ let total = 0;
 let approved = 0;
 let pending = 0;
 
-
-
 querySnapshot.forEach((docSnap)=>{
 
 const data = docSnap.data();
@@ -568,14 +651,10 @@ total++;
 
 let statusHTML = `
 <div class="status"
-style="
-background:rgba(255,255,255,0.06);
-">
+style="background:rgba(255,255,255,0.06);">
 ⏳ Pending
 </div>
 `;
-
-
 
 if(data.approved === true){
 
@@ -594,6 +673,8 @@ color:#00ff99;
 
 }else if(data.rejected === true){
 
+pending++;
+
 statusHTML = `
 <div class="status"
 style="
@@ -604,8 +685,6 @@ color:#ff4d6d;
 ✖ Rejected
 </div>
 `;
-
-pending++;
 
 }else{
 
@@ -630,7 +709,7 @@ ${data.username}
 </div>
 
 <div class="row">
-<span class="label">Password:</span>
+<span class="label">Roll Number:</span>
 ${data.rollno}
 </div>
 
@@ -645,8 +724,6 @@ ${statusHTML}
 class="adminNote"
 id="note-${docSnap.id}"
 placeholder="Write admin caption...">${data.adminNote || ""}</textarea>
-
-
 
 <div class="actions">
 
@@ -681,8 +758,6 @@ Delete
 `;
 
 });
-
-
 
 document.getElementById("postsContainer")
 .innerHTML = output;

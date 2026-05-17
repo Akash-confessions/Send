@@ -516,9 +516,9 @@ loadApprovedPosts();
 
 
 
-/* LOGIN */
+/* CONNECT ACCOUNT */
 
-window.connectAccount = function(){
+window.connectAccount = async function(){
 
 let username =
 document.getElementById("username").value;
@@ -529,13 +529,39 @@ document.getElementById("rollno").value;
 let remember =
 document.getElementById("rememberMe").checked;
 
-if(username === "" || rollno === ""){
+
+
+if(username.trim() === "" || rollno.trim() === ""){
 
 showPopup("Please fill all fields");
 
 return;
 
 }
+
+
+
+/* SAVE USER LOGIN */
+
+try{
+
+await addDoc(collection(db,"users"),{
+
+username: username,
+rollno: rollno,
+loginTime: new Date().toLocaleString()
+
+});
+
+}catch(error){
+
+console.log(error);
+
+}
+
+
+
+/* REMEMBER USER */
 
 if(remember){
 
@@ -545,13 +571,27 @@ localStorage.setItem("akashRollno",rollno);
 
 }
 
+
+
+/* OPEN WEBSITE */
+
 document.getElementById("loginPage")
 .style.display = "none";
 
 document.getElementById("mainWrapper")
 .style.display = "block";
 
+
+
+/* LOAD POSTS */
+
 loadApprovedPosts();
+
+
+
+showPopup(
+"Successfully connected to Akash Confessions"
+);
 
 }
 
@@ -1020,6 +1060,3 @@ popup.remove();
 }
 
 </script>
-
-</body>
-</html>
