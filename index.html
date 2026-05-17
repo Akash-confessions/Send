@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Akash Confessions</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#020202;
+overflow-x:hidden;
+color:white;
+min-height:100vh;
+padding:20px;
+}
+
+
+
+/* VIDEO */
+
+#bgVideo{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-6;
+opacity:0.28;
+}
+
+
+
+/* BLUE GLOW */
+
+body::before{
+content:"";
+position:fixed;
+width:600px;
+height:600px;
+background:radial-gradient(circle,#00bfff 0%,transparent 70%);
+filter:blur(140px);
+opacity:0.22;
+top:-220px;
+left:-220px;
+z-index:-3;
+animation:moveGlow 8s infinite alternate;
+}
+
+body::after{
+content:"";
+position:fixed;
+width:500px;
+height:500px;
+background:radial-gradient(circle,#0044ff 0%,transparent 70%);
+filter:blur(140px);
+opacity:0.18;
+bottom:-220px;
+right:-220px;
+z-index:-3;
+animation:moveGlow 9s infinite alternate;
+}
+
+@keyframes moveGlow{
+
+from{
+transform:translateY(-20px);
+}
+
+to{
+transform:translateY(20px);
+}
+
+}
+
+
+
+/* LOGIN */
+
+.loginPage{
+width:100%;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.loginBox{
+width:430px;
+padding:35px;
+border-radius:32px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(22px);
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.logoImage{
+width:110px;
+height:110px;
+border-radius:50%;
+display:block;
+margin:auto;
+margin-bottom:18px;
+object-fit:cover;
+border:3px solid rgba(0,191,255,0.4);
+}
+
+.logo{
+text-align:center;
+font-size:34px;
+font-weight:800;
+color:#00bfff;
+margin-bottom:10px;
+}
+
+.sub{
+text-align:center;
+line-height:28px;
+color:#bdbdbd;
+margin-bottom:25px;
+}
+
+input,textarea{
+width:100%;
+padding:16px;
+margin-top:15px;
+border:none;
+outline:none;
+border-radius:18px;
+background:rgba(255,255,255,0.08);
+color:white;
+font-size:15px;
+}
+
+textarea{
+height:220px;
+resize:none;
+line-height:30px;
+}
+
+.connectBtn,
+.sendBtn{
+width:100%;
+padding:16px;
+margin-top:22px;
+border:none;
+border-radius:18px;
+background:linear-gradient(90deg,#00a2ff,#0044ff);
+color:white;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+}
+
+.verifyText{
+margin-top:18px;
+text-align:center;
+font-size:13px;
+font-weight:600;
+color:#00bfff;
+}
+
+
+
+/* MAIN */
+
+.mainWrapper{
+display:none;
+max-width:1100px;
+margin:auto;
+}
+
+
+
+/* NAV */
+
+.topNav{
+display:flex;
+justify-content:center;
+gap:16px;
+margin-bottom:35px;
+flex-wrap:wrap;
+}
+
+.navBtn{
+padding:15px 28px;
+border:none;
+border-radius:18px;
+background:rgba(255,255,255,0.06);
+color:white;
+font-weight:700;
+cursor:pointer;
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.08);
+}
+
+
+
+/* SEND PAGE */
+
+.sendPage{
+display:none;
+}
+
+.sendBox{
+max-width:700px;
+margin:auto;
+padding:28px;
+border-radius:30px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.notice{
+padding:16px;
+border-radius:18px;
+background:rgba(0,170,255,0.08);
+line-height:28px;
+font-size:14px;
+color:#dff6ff;
+}
+
+
+
+/* FEED */
+
+#feedContainer{
+display:flex;
+flex-direction:column;
+gap:28px;
+}
+
+
+
+/* MUSIC */
+
+.musicBtn{
+position:fixed;
+bottom:25px;
+right:25px;
+width:60px;
+height:60px;
+border:none;
+border-radius:50%;
+background:linear-gradient(90deg,#00a2ff,#0044ff);
+color:white;
+font-size:22px;
+cursor:pointer;
+z-index:999;
+}
+
+</style>
+</head>
+
+<body>
+
+
+
+<!-- VIDEO -->
+
+<video autoplay muted loop id="bgVideo">
+<source src="background.mp4" type="video/mp4">
+</video>
+
+
+
+<!-- MUSIC -->
+
+<audio id="bgMusic" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+
+
+<!-- LOGIN -->
+
+<div class="loginPage" id="loginPage">
+
+<div class="loginBox">
+
+<img src="https://i.postimg.cc/hGYsLGmM/IMG-20260515-204905-314.jpg"
+class="logoImage">
+
+<div class="logo">
+AKASH CONFESSIONS
+</div>
+
+<div class="sub">
+Connect your Insta Account<br>
+to access private confessions
+</div>
+
+<input
+type="text"
+id="username"
+placeholder="Enter Username">
+
+<input
+type="text"
+id="rollno"
+placeholder="Enter Password">
+
+<div style="
+margin-top:15px;
+display:flex;
+align-items:center;
+gap:10px;
+color:#d7d7d7;
+font-size:14px;
+">
+
+<input
+type="checkbox"
+id="rememberMe"
+style="
+width:18px;
+height:18px;
+">
+
+Remember Me
+
+</div>
+
+<button
+class="connectBtn"
+onclick="connectAccount()">
+Connect Account
+</button>
+
+<div class="verifyText">
+Verified Persons Only
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- MAIN -->
+
+<div class="mainWrapper" id="mainWrapper">
+
+<div class="topNav">
+
+<button
+class="navBtn"
+onclick="showFeed()">
+💬 Public Confessions
+</button>
+
+<button
+class="navBtn"
+onclick="showSend()">
+✍ Send Confession
+</button>
+
+</div>
+
+
+
+<!-- FEED -->
+
+<div id="feedContainer"></div>
+
+
+
+<!-- SEND -->
+
+<div class="sendPage" id="sendPage">
+
+<div class="sendBox">
+
+<div class="notice">
+Your identity remains hidden from the public. Every confession is reviewed securely by the admin team before publication.
+</div>
+
+<textarea
+id="confessionText"
+placeholder="Write your confession..."></textarea>
+
+
+
+<div style="
+margin-top:18px;
+padding:16px;
+border-radius:18px;
+background:rgba(255,255,255,0.06);
+border:1px solid rgba(255,255,255,0.08);
+">
+
+<div style="
+font-size:14px;
+margin-bottom:12px;
+color:#d8f4ff;
+line-height:26px;
+">
+If you want to upload a picture with your confession, upload it from here.
+</div>
+
+<input
+type="file"
+id="imageUpload"
+accept="image/*">
+
+</div>
+
+
+
+<button
+class="sendBtn"
+onclick="sendConfession()">
+Send Confession
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- MUSIC -->
+
+<button
+class="musicBtn"
+onclick="toggleMusic()">
+🎵
+</button>
+
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+updateDoc,
+doc
+}
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBF3Jogmn2E-jRY6lIF9yR5qHURU9xhak8",
+
+authDomain: "akash-65165.firebaseapp.com",
+
+projectId: "akash-65165",
+
+storageBucket: "akash-65165.firebasestorage.app",
+
+messagingSenderId: "62675604922",
+
+appId: "1:62675604922:web:7ec9bd6567c7a0c7d93983"
+
+};
+
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+
+/* AUTO LOGIN */
+
+window.onload = function(){
+
+let savedUser =
+localStorage.getItem("akashUsername");
+
+let savedRoll =
+localStorage.getItem("akashRollno");
+
+if(savedUser && savedRoll){
+
+document.getElementById("username").value =
+savedUser;
+
+document.getElementById("rollno").value =
+savedRoll;
+
+document.getElementById("loginPage")
+.style.display = "none";
+
+document.getElementById("mainWrapper")
+.style.display = "block";
+
+loadApprovedPosts();
+
+}
+
+}
+
+
+
+/* LOGIN */
+
+window.connectAccount = function(){
+
+let username =
+document.getElementById("username").value;
+
+let rollno =
+document.getElementById("rollno").value;
+
+let remember =
+document.getElementById("rememberMe").checked;
+
+if(username === "" || rollno === ""){
+
+showPopup("Please fill all fields");
+
+return;
+
+}
+
+if(remember){
+
+localStorage.setItem("akashUsername",username);
+
+localStorage.setItem("akashRollno",rollno);
+
+}
+
+document.getElementById("loginPage")
+.style.display = "none";
+
+document.getElementById("mainWrapper")
+.style.display = "block";
+
+loadApprovedPosts();
+
+}
+
+
+
+/* PAGE SWITCH */
+
+window.showFeed = function(){
+
+document.getElementById("feedContainer")
+.style.display = "flex";
+
+document.getElementById("sendPage")
+.style.display = "none";
+
+}
+
+
+
+window.showSend = function(){
+
+document.getElementById("feedContainer")
+.style.display = "none";
+
+document.getElementById("sendPage")
+.style.display = "block";
+
+}
+
+
+
+/* SEND CONFESSION */
+
+window.sendConfession = async function(){
+
+let confession =
+document.getElementById("confessionText").value;
+
+let username =
+document.getElementById("username").value;
+
+let rollno =
+document.getElementById("rollno").value;
+
+if(confession.trim() === ""){
+
+showPopup("Please write your confession first");
+
+return;
+
+}
+
+
+
+await addDoc(collection(db,"confessions"),{
+
+username: username,
+rollno: rollno,
+confession: confession,
+approved:false,
+rejected:false,
+adminNote:"",
+likes:0,
+comments:[],
+time:new Date().toLocaleString()
+
+});
+
+
+
+showPopup(
+"Your confession has been securely submitted and is waiting for admin approval."
+);
+
+document.getElementById("confessionText").value = "";
+
+}
+
+
+
+/* LOAD POSTS */
+
+async function loadApprovedPosts(){
+
+const querySnapshot =
+await getDocs(collection(db,"confessions"));
+
+let output = "";
+
+querySnapshot.forEach((docSnap,index)=>{
+
+const data = docSnap.data();
+
+if(data.approved === true){
+
+output += `
+
+<div style="
+max-width:720px;
+margin:auto;
+background:rgba(255,255,255,0.06);
+padding:28px;
+border-radius:30px;
+backdrop-filter:blur(22px);
+border:1px solid rgba(255,255,255,0.08);
+box-shadow:
+0 0 35px rgba(0,170,255,0.12),
+0 0 80px rgba(0,70,255,0.08);
+position:relative;
+overflow:hidden;
+">
+
+<div style="
+position:absolute;
+width:220px;
+height:220px;
+background:radial-gradient(circle,rgba(0,191,255,0.18),transparent 70%);
+top:-70px;
+right:-70px;
+filter:blur(45px);
+"></div>
+
+
+
+<div style="
+font-size:13px;
+font-weight:700;
+letter-spacing:2px;
+text-transform:uppercase;
+color:#00bfff;
+margin-bottom:18px;
+position:relative;
+z-index:2;
+">
+Confession
+</div>
+
+
+
+<div style="
+font-size:17px;
+line-height:34px;
+color:white;
+position:relative;
+z-index:2;
+">
+${data.confession}
+</div>
+
+
+
+${data.adminNote ? `
+
+<div style="
+margin-top:22px;
+padding:14px 16px;
+border-left:4px solid #00bfff;
+background:rgba(0,170,255,0.08);
+border-radius:16px;
+position:relative;
+z-index:2;
+">
+
+<div style="
+font-size:12px;
+font-weight:700;
+letter-spacing:1px;
+text-transform:uppercase;
+color:#00bfff;
+margin-bottom:6px;
+">
+Admin Caption
+</div>
+
+<div style="
+font-size:15px;
+line-height:28px;
+color:#eaf9ff;
+">
+${data.adminNote}
+</div>
+
+</div>
+
+` : ""}
+
+
+
+<div style="
+display:flex;
+gap:14px;
+margin-top:24px;
+flex-wrap:wrap;
+position:relative;
+z-index:2;
+">
+
+<button
+onclick="likePost('${docSnap.id}',this)"
+style="
+padding:12px 18px;
+border:none;
+border-radius:16px;
+background:rgba(255,255,255,0.06);
+color:white;
+font-weight:700;
+cursor:pointer;
+font-size:15px;
+">
+
+❤️ <span>${data.likes || 0}</span>
+
+</button>
+
+
+
+<button
+onclick="toggleComments(this)"
+style="
+padding:12px 18px;
+border:none;
+border-radius:16px;
+background:rgba(255,255,255,0.06);
+color:white;
+font-weight:700;
+cursor:pointer;
+font-size:15px;
+">
+
+💬 Comments
+
+</button>
+
+</div>
+
+
+
+<div class="commentSection"
+style="
+display:none;
+margin-top:22px;
+position:relative;
+z-index:2;
+">
+
+<input
+type="text"
+placeholder="Write comment..."
+style="
+width:100%;
+padding:16px;
+border:none;
+outline:none;
+border-radius:16px;
+background:rgba(255,255,255,0.06);
+color:white;
+font-size:14px;
+margin-bottom:12px;
+">
+
+<button
+onclick="addComment('${docSnap.id}',this)"
+style="
+width:100%;
+padding:14px;
+border:none;
+border-radius:16px;
+background:linear-gradient(90deg,#00a2ff,#0044ff);
+color:white;
+font-weight:700;
+cursor:pointer;
+font-size:15px;
+">
+Send Comment
+</button>
+
+
+
+<div class="commentsList">
+
+${(data.comments || []).map(comment=>`
+
+<div style="
+padding:13px 15px;
+border-radius:14px;
+background:rgba(255,255,255,0.05);
+margin-top:12px;
+line-height:25px;
+border-left:3px solid #00bfff;
+font-size:14px;
+color:#f1f1f1;
+">
+${comment}
+</div>
+
+`).join("")}
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+});
+
+document.getElementById("feedContainer")
+.innerHTML = output;
+
+}
+
+
+
+/* LIKE */
+
+window.likePost = async function(id,btn){
+
+let count =
+btn.querySelector("span");
+
+let current =
+parseInt(count.innerText);
+
+count.innerText = current + 1;
+
+await updateDoc(doc(db,"confessions",id),{
+likes: current + 1
+});
+
+}
+
+
+
+/* COMMENT */
+
+window.toggleComments = function(btn){
+
+let section =
+btn.parentElement.parentElement
+.querySelector(".commentSection");
+
+if(section.style.display === "block"){
+
+section.style.display = "none";
+
+}else{
+
+section.style.display = "block";
+
+}
+
+}
+
+
+
+window.addComment = async function(id,btn){
+
+let parent =
+btn.parentElement;
+
+let input =
+parent.querySelector("input");
+
+if(input.value.trim() === ""){
+
+showPopup("Write a comment first");
+
+return;
+
+}
+
+
+
+const querySnapshot =
+await getDocs(collection(db,"confessions"));
+
+querySnapshot.forEach(async(docSnap)=>{
+
+if(docSnap.id === id){
+
+let data = docSnap.data();
+
+let oldComments =
+data.comments || [];
+
+oldComments.push(input.value);
+
+await updateDoc(doc(db,"confessions",id),{
+comments: oldComments
+});
+
+loadApprovedPosts();
+
+showPopup("Comment added");
+
+}
+
+});
+
+}
+
+
+
+/* MUSIC */
+
+let musicPlaying = false;
+
+window.toggleMusic = function(){
+
+const music =
+document.getElementById("bgMusic");
+
+if(musicPlaying){
+
+music.pause();
+musicPlaying = false;
+
+}else{
+
+music.play();
+musicPlaying = true;
+
+}
+
+}
+
+
+
+/* POPUP */
+
+window.showPopup = function(message){
+
+let popup =
+document.createElement("div");
+
+popup.innerHTML = `
+<div style="
+position:fixed;
+top:30px;
+left:50%;
+transform:translateX(-50%);
+background:rgba(0,0,0,0.82);
+padding:18px 28px;
+border-radius:18px;
+border:1px solid rgba(0,191,255,0.3);
+color:white;
+font-weight:600;
+z-index:99999;
+backdrop-filter:blur(18px);
+">
+${message}
+</div>
+`;
+
+document.body.appendChild(popup);
+
+setTimeout(()=>{
+
+popup.remove();
+
+},3500);
+
+}
+
+</script>
+
+</body>
+</html>
